@@ -4,11 +4,6 @@ return {
     version = "*",
     dependencies = { "nvim-tree/nvim-web-devicons", "shaunsingh/nord.nvim" },
     config = function()
-      local highlights = require("nord").bufferline.highlights({
-        italic = true,
-        bold = true,
-      })
-
       require("bufferline").setup({
         options = {
           mode = "buffers",

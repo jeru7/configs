@@ -7,7 +7,11 @@ function ToggleLineNumbers()
   end
 end
 
--- keymaps
+-- toggle word wrap
+function ToggleWordWrap()
+  vim.wo.wrap = not vim.wo.wrap
+end
+
 -- window navigation (:vsplit) - multiple windows
 vim.api.nvim_set_keymap("n", "<C-h>", "<C-w>h", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<C-j>", "<C-w>j", { noremap = true, silent = true })
@@ -21,6 +25,9 @@ vim.api.nvim_set_keymap("n", "<M-l>", ":bnext<CR>", { noremap = true, silent = t
 -- toggle line numbers
 vim.api.nvim_set_keymap("n", "<leader>rn", ":lua ToggleLineNumbers()<CR>", { noremap = true, silent = true })
 
+-- toggle word wrap
+vim.api.nvim_set_keymap("n", "<leader>ww", ":lua ToggleWordWrap()<CR>", { noremap = true, silent = true })
+
 -- space + l: list todos on telescope
 vim.keymap.set("n", "<leader>l", ":TodoTelescope<CR>", { noremap = true, silent = true })
 
@@ -28,3 +35,10 @@ vim.keymap.set("n", "<leader>l", ":TodoTelescope<CR>", { noremap = true, silent 
 vim.api.nvim_set_keymap("n", "<leader>rf", "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true })
 -- space + rr to show the number of references
 vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>ReferencerToggle<CR>", { noremap = true, silent = true })
+
+-- toggle markdown view
+vim.api.nvim_set_keymap("n", "<M-m>", ":Markview<CR>", { noremap = true, silent = true })
+
+-- window width adjustment
+vim.api.nvim_set_keymap("n", "<leader>w+", ":vertical resize +5<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>w-", ":vertical resize -5<CR>", { noremap = true, silent = true })

@@ -1,16 +1,26 @@
 return {
-	"shaunsingh/nord.nvim",
-	lazy = false,
-	priority = 1000,
-	config = function()
-		vim.g.nord_contrast = true
-		vim.g.nord_borders = false
-		vim.g.nord_disable_background = false
-		vim.g.nord_cursorline_transparent = false
-		vim.g.nord_italic = true
-		vim.g.nord_bold = true
-		vim.g.nord_uniform_diff_background = false
-
-		vim.cmd.colorscheme("nord")
-	end,
+  "sainnhe/gruvbox-material",
+  lazy = false,
+  priority = 1000,
+  config = function()
+    -- Optionally configure and load the colorscheme
+    -- directly inside the plugin declaration.
+    vim.g.gruvbox_material_background = "hard"
+    vim.g.gruvbox_material_enable_italic = true
+    vim.cmd.colorscheme("gruvbox-material")
+  end,
 }
+
+-- return {
+--   "Mofiqul/adwaita.nvim",
+--   lazy = false,
+--   priority = 1000,
+--
+--   -- configure and set on startup
+--   config = function()
+--     vim.g.adwaita_darker = true -- for darker version
+--     vim.g.adwaita_disable_cursorline = true -- to disable cursorline
+--     vim.g.adwaita_transparent = false -- makes the background transparent
+--     vim.cmd("colorscheme adwaita")
+--   end,
+-- }
