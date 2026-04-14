@@ -22,6 +22,19 @@ vim.api.nvim_set_keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true 
 vim.api.nvim_set_keymap("n", "<M-h>", ":bprevious<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<M-l>", ":bnext<CR>", { noremap = true, silent = true })
 
+-- copy diagnostics
+vim.keymap.set("n", "<leader>cd", function()
+  local diagnostics = vim.diagnostic.get(0)
+  local line = vim.fn.line(".") - 1
+  for _, diag in ipairs(diagnostics) do
+    if diag.lnum == line then
+      vim.fn.setreg("+", diag.message)
+      vim.notify("Copied: " .. diag.message)
+      break
+    end
+  end
+end, { silent = true })
+
 -- toggle line numbers
 vim.api.nvim_set_keymap("n", "<leader>rn", ":lua ToggleLineNumbers()<CR>", { noremap = true, silent = true })
 
@@ -30,6 +43,11 @@ vim.api.nvim_set_keymap("n", "<leader>ww", ":lua ToggleWordWrap()<CR>", { norema
 
 -- space + l: list todos on telescope
 vim.keymap.set("n", "<leader>l", ":TodoTelescope<CR>", { noremap = true, silent = true })
+
+-- docs
+vim.keymap.set("n", "<leader>cg", function()
+  require("neogen").generate()
+end, { noremap = true, silent = true })
 
 -- space + rf to show references
 vim.api.nvim_set_keymap("n", "<leader>rf", "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true })

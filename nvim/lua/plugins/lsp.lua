@@ -1,5 +1,4 @@
 return {
-  -- Mason
   {
     "williamboman/mason.nvim",
     lazy = false,
@@ -21,20 +20,40 @@ return {
     },
   },
 
-  -- TypeScript tools
+  {
+    "nvim-lua/plenary.nvim",
+    lazy = false,
+    config = function()
+      vim.filetype.add({
+        extension = {
+          jsx = "javascriptreact",
+          tsx = "typescriptreact",
+        },
+      })
+    end,
+  },
+
   {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {},
+    config = function()
+      require("typescript-tools").setup({
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+        settings = {
+          tsserver_file_preferences = {
+            includeInlayParameterNameHints = "all",
+            includeCompletionsForModuleExports = true,
+          },
+        },
+      })
+    end,
   },
 
-  -- LSP servers
   {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      capabilities.textDocument.semanticTokens = nil
 
       vim.diagnostic.config({
         virtual_text = false,
@@ -52,29 +71,26 @@ return {
         end,
       })
 
-      -- global default LSP options
       vim.lsp.config("*", {
         capabilities = capabilities,
         flags = { debounce_text_changes = 150 },
-        on_attach = function(client, bufnr)
-          vim.keymap.set("n", "<A-j>", vim.diagnostic.goto_next, { buffer = bufnr, silent = true })
-          vim.keymap.set("n", "<A-k>", vim.diagnostic.goto_prev, { buffer = bufnr, silent = true })
-        end,
       })
 
-      vim.lsp.enable({ "html", "tailwindcss", "emmet_ls", "pyright" })
+      vim.lsp.enable({
+        "html",
+        "tailwindcss",
+        "emmet_ls",
+        "pyright",
+      })
     end,
   },
 
-  -- none-ls (must load after LSP)
   {
     "nvimtools/none-ls.nvim",
-    lazy = false,
     dependencies = { "nvimtools/none-ls-extras.nvim" },
     config = function()
-      local ok, null_ls = pcall(require, "null-ls")
+      local ok, null_ls = pcall(require, "none-ls")
       if not ok then
-        vim.notify("null-ls not found", vim.log.levels.ERROR)
         return
       end
 
@@ -84,7 +100,14 @@ return {
             extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
           }),
           null_ls.builtins.formatting.prettier.with({
-            filetypes = { "javascript", "typescript", "html", "css", "javascriptreact", "typescriptreact" },
+            filetypes = {
+              "javascript",
+              "typescript",
+              "javascriptreact",
+              "typescriptreact",
+              "html",
+              "css",
+            },
           }),
           null_ls.builtins.formatting.black,
         },
@@ -93,7 +116,9 @@ return {
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*",
         callback = function()
-          vim.lsp.buf.format({ async = false })
+          vim.lsp.buf.format({
+            timeout_ms = 2000,
+          })
         end,
       })
 
@@ -103,7 +128,6 @@ return {
     end,
   },
 
-  -- Autocomplete + Snippets
   {
     "hrsh7th/nvim-cmp",
     lazy = false,

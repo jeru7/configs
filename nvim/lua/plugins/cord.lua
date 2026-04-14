@@ -14,9 +14,9 @@ return {
         icon = nil,
       },
       display = {
-        theme = "default",
+        theme = "catppuccin",
         flavor = "dark",
-        view = "full",
+        view = "editor",
         swap_fields = false,
         swap_icons = false,
       },
@@ -40,14 +40,35 @@ return {
       },
       text = {
         default = nil,
-        workspace = function(opts)
+        workspace = function()
+  local cwd = vim.fn.getcwd()
+
+  -- get git root (if any)
+  local git_root = vim.fn.systemlist("git rev-parse --show-toplevel 2>/dev/null")[1]
+
+  if git_root and git_root ~= "" then
+    local repo_name = vim.fn.fnamemodify(git_root, ":t")
+
+    -- make cwd relative to git root
+    local rel = cwd:gsub("^" .. vim.pesc(git_root) .. "/?", "")
+
+    if rel == "" then
+      -- at repo root → show repo name only
+      return "Workspace: " .. repo_name
+    else
+      -- inside repo → repo/subfolder
+      return "Workspace: " .. repo_name .. "/" .. rel
+    end
+  end
+
+  -- NOT in git repo → only tail
+  return "Workspace: " .. vim.fn.fnamemodify(cwd, ":t")
+end,
+        viewing = function(opts)
           return ""
         end,
-        viewing = function(opts)
-          return "" -- .. opts.filename
-        end,
         editing = function(opts)
-          return "" -- .. opts.filename
+          return ""
         end,
         file_browser = function(opts)
           return ""
@@ -91,7 +112,26 @@ return {
       --     url = function(opts) return opts.repo_url end,
       --   },
       -- },
-      assets = nil,
+      assets = {
+        opencode = {
+          icon = "neovim",
+          tooltip = "Neovim",
+          text = "",
+          color = "neovim",
+        },
+        opencode_output = {
+          icon = "neovim",
+          tooltip = "Neovim",
+          text = "",
+          color = "neovim",
+        },
+        opencode_input = {
+          icon = "neovim",
+          tooltip = "Neovim",
+          text = "",
+          color = "neovim",
+        },
+      },
       variables = nil,
       hooks = {
         ready = nil,
