@@ -1,43 +1,48 @@
 return {
-  "sudo-tee/opencode.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    {
-      "MeanderingProgrammer/render-markdown.nvim",
-      ft = { "markdown", "opencode_output" },
-      opts = {
-        anti_conceal = { enabled = false },
-        file_types = { "markdown", "opencode_output" },
-      },
-    },
-    "saghen/blink.cmp",
-    "folke/snacks.nvim",
-  },
+	"sudo-tee/opencode.nvim",
+	dependencies = {
+		"nvim-lua/plenary.nvim",
+		{
+			"MeanderingProgrammer/render-markdown.nvim",
+			ft = { "markdown", "opencode_output" },
+			opts = {
+				anti_conceal = { enabled = false },
+				file_types = { "markdown", "opencode_output" },
+			},
+		},
+		"saghen/blink.cmp",
+		"folke/snacks.nvim",
+	},
 
-  lazy = false,
-  config = function()
-    local ok, opencode = pcall(require, "opencode")
-    if not ok then
-      vim.notify("opencode.nvim failed to load", vim.log.levels.ERROR)
-      return
-    end
+	lazy = false,
+	config = function()
+		local ok, opencode = pcall(require, "opencode")
+		if not ok then
+			vim.notify("opencode.nvim failed to load", vim.log.levels.ERROR)
+			return
+		end
 
-    opencode.setup({
-      default_global_keymaps = true,
-      keymap_prefix = "<leader>o",
-      ui = {
-        input = {
-          min_height = 0.30,
-          max_height = 0.50,
-          auto_hide = true,
-        },
-      },
-      context = {
-        diagnostics = {
-          warn = false,
-          error = false,
-        },
-      },
-    })
-  end,
+		opencode.setup({
+			default_global_keymaps = true,
+			keymap_prefix = "<leader>o",
+
+			ui = {
+				input = {
+					min_height = 0.10,
+					max_height = 0.25,
+					auto_hide = false,
+				},
+				output = {
+					max_messages = nil,
+				},
+			},
+
+			context = {
+				diagnostics = {
+					warning = false,
+					error = false,
+				},
+			},
+		})
+	end,
 }

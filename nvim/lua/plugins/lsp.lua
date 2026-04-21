@@ -2,7 +2,9 @@ return {
   {
     "williamboman/mason.nvim",
     lazy = false,
-    config = true,
+    config = function()
+      require("mason").setup()
+    end,
   },
 
   {
@@ -21,30 +23,22 @@ return {
   },
 
   {
-    "nvim-lua/plenary.nvim",
-    lazy = false,
-    config = function()
-      vim.filetype.add({
-        extension = {
-          jsx = "javascriptreact",
-          tsx = "typescriptreact",
-        },
-      })
-    end,
-  },
-
-  {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
       require("typescript-tools").setup({
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        settings = {
-          tsserver_file_preferences = {
-            includeInlayParameterNameHints = "all",
-            includeCompletionsForModuleExports = true,
-          },
+        capabilities = capabilities,
+        filetypes = {
+          "javascript",
+          "javascriptreact",
+          "typescript",
+          "typescriptreact",
         },
+        on_attach = function(client)
+          client.server_capabilities.documentFormattingProvider = false
+        end,
       })
     end,
   },
@@ -62,8 +56,8 @@ return {
         severity_sort = true,
       })
 
-      vim.keymap.set("n", "<A-j>", vim.diagnostic.goto_next, { silent = true })
-      vim.keymap.set("n", "<A-k>", vim.diagnostic.goto_prev, { silent = true })
+      vim.keymap.set("n", "<A-j>", vim.diagnostic.goto_next)
+      vim.keymap.set("n", "<A-k>", vim.diagnostic.goto_prev)
 
       vim.api.nvim_create_autocmd("CursorHold", {
         callback = function()
@@ -89,42 +83,32 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = { "nvimtools/none-ls-extras.nvim" },
     config = function()
-      local ok, null_ls = pcall(require, "none-ls")
-      if not ok then
-        return
-      end
+      local null_ls = require("null-ls")
 
       null_ls.setup({
         sources = {
           null_ls.builtins.formatting.stylua.with({
             extra_args = { "--indent-type", "Spaces", "--indent-width", "2" },
           }),
-          null_ls.builtins.formatting.prettier.with({
-            filetypes = {
-              "javascript",
-              "typescript",
-              "javascriptreact",
-              "typescriptreact",
-              "html",
-              "css",
-            },
-          }),
-          null_ls.builtins.formatting.black,
+          null_ls.builtins.formatting.prettier,
         },
       })
 
+      local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
       vim.api.nvim_create_autocmd("BufWritePre", {
-        pattern = "*",
-        callback = function()
+        group = augroup,
+        callback = function(args)
           vim.lsp.buf.format({
-            timeout_ms = 2000,
+            bufnr = args.buf,
+            async = true,
+            timeout_ms = 3000,
+            filter = function(client)
+              return client.supports_method("textDocument/formatting")
+            end,
           })
         end,
       })
-
-      vim.keymap.set("n", "<leader>gf", function()
-        vim.lsp.buf.format({ async = true })
-      end, { silent = true })
     end,
   },
 
@@ -154,24 +138,6 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<A-j>"] = cmp.mapping.select_next_item(),
           ["<A-k>"] = cmp.mapping.select_prev_item(),
-          ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            elseif luasnip.expand_or_jumpable() then
-              luasnip.expand_or_jump()
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
-          ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-              luasnip.jump(-1)
-            else
-              fallback()
-            end
-          end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },

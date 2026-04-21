@@ -12,7 +12,7 @@ return {
     require("neo-tree").setup({
       filesystem = {
         window = {
-          position = "float",
+          position = "left",
           padding = { 0, 0, 0, 0 },
           mappings = {
             ["l"] = "open",
