@@ -12,12 +12,8 @@ return {
     lazy = false,
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = {
-        "html",
-        "tailwindcss",
-        "emmet_ls",
-        "pyright",
-      },
+      ensure_installed = { "html", "tailwindcss", "emmet_ls", "pyright" },
+      ensure_not_installed = { "ts_ls" },
       automatic_installation = true,
     },
   },
@@ -68,6 +64,24 @@ return {
       vim.lsp.config("*", {
         capabilities = capabilities,
         flags = { debounce_text_changes = 150 },
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+              path = vim.split(package.path, ";"),
+            },
+            diagnostics = {
+              globals = { "vim" },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+              checkThirdParty = false,
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
       })
 
       vim.lsp.enable({
