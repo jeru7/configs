@@ -1,26 +1,28 @@
 return {
-  "sainnhe/gruvbox-material",
+  "catppuccin/nvim",
   lazy = false,
   priority = 1000,
-  config = function()
-    -- Optionally configure and load the colorscheme
-    -- directly inside the plugin declaration.
-    vim.g.gruvbox_material_background = "hard"
-    vim.g.gruvbox_material_enable_italic = true
-    vim.cmd.colorscheme("gruvbox-material")
+  name = "catppuccin",
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+  opts = {
+    flavour = "frappe",
+    transparent_background = false,
+    term_colors = true,
+    integrations = {
+      telescope = true,
+      noice = true,
+      lualine = true,
+      native_lsp = { enabled = true },
+      treesitter = true,
+      indent_blankline = { enabled = true },
+      which_key = true,
+      blink_cmp = true,
+      bufferline = true,
+      notify = true
+    },
+  },
+  config = function(_, opts)
+    require("catppuccin").setup(opts)
+    vim.cmd.colorscheme("catppuccin")
   end,
 }
-
--- return {
---   "Mofiqul/adwaita.nvim",
---   lazy = false,
---   priority = 1000,
---
---   -- configure and set on startup
---   config = function()
---     vim.g.adwaita_darker = true -- for darker version
---     vim.g.adwaita_disable_cursorline = true -- to disable cursorline
---     vim.g.adwaita_transparent = false -- makes the background transparent
---     vim.cmd("colorscheme adwaita")
---   end,
--- }

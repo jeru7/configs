@@ -27,6 +27,7 @@ return {
           tab_size = 18,
         },
       })
+      vim.api.nvim_set_hl(0, "BufferLineFill", { bg = "#292c3c" })
     end,
   },
 }

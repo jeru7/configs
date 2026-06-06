@@ -45,11 +45,6 @@ vim.api.nvim_set_keymap("n", "<leader>ww", ":lua ToggleWordWrap()<CR>", { norema
 -- space + l: list todos on telescope
 vim.keymap.set("n", "<leader>l", ":TodoTelescope<CR>", { noremap = true, silent = true })
 
--- space + rf to show references
-vim.api.nvim_set_keymap("n", "<leader>rf", "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true })
--- space + rr to show the number of references
-vim.api.nvim_set_keymap("n", "<leader>rr", "<cmd>ReferencerToggle<CR>", { noremap = true, silent = true })
-
 -- toggle markdown view
 vim.api.nvim_set_keymap("n", "<M-m>", ":Markview<CR>", { noremap = true, silent = true })
 
@@ -58,5 +53,9 @@ vim.api.nvim_set_keymap("n", "<leader>w+", ":vertical resize +5<CR>", { noremap 
 vim.api.nvim_set_keymap("n", "<leader>w-", ":vertical resize -5<CR>", { noremap = true, silent = true })
 
 -- annotations
-vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>",
-  { noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+  "n",
+  "<Leader>nc",
+  ":lua require('neogen').generate({ type = 'class' })<CR>",
+  { noremap = true, silent = true }
+)
