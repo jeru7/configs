@@ -29,6 +29,13 @@ vim.keymap.set("n", "<leader>cd", function()
   end
 end, { silent = true })
 
+--- lsp code action
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
+vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action in visual mode" })
+
+-- rename symbol
+vim.keymap.set("n", "<leader>lr", vim.lsp.buf.rename, { desc = "Rename symbol" })
+
 -- toggle line numbers
 vim.api.nvim_set_keymap("n", "<leader>rn", ":lua ToggleLineNumbers()<CR>", { noremap = true, silent = true })
 
