@@ -64,6 +64,9 @@ return {
       vim.lsp.config("*", {
         capabilities = capabilities,
         flags = { debounce_text_changes = 150 },
+      })
+
+      vim.lsp.config("lua_ls", {
         settings = {
           Lua = {
             runtime = {
@@ -89,6 +92,7 @@ return {
         "tailwindcss",
         "emmet_ls",
         "pyright",
+        "lua_ls"
       })
     end,
   },

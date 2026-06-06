@@ -45,11 +45,6 @@ vim.api.nvim_set_keymap("n", "<leader>ww", ":lua ToggleWordWrap()<CR>", { norema
 -- space + l: list todos on telescope
 vim.keymap.set("n", "<leader>l", ":TodoTelescope<CR>", { noremap = true, silent = true })
 
--- docs
-vim.keymap.set("n", "<leader>cg", function()
-  require("neogen").generate()
-end, { noremap = true, silent = true })
-
 -- space + rf to show references
 vim.api.nvim_set_keymap("n", "<leader>rf", "<cmd>Telescope lsp_references<CR>", { noremap = true, silent = true })
 -- space + rr to show the number of references
