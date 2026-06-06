@@ -26,4 +26,5 @@ return {
     },
   },
   event = "BufReadPost",
+  cmd = "TodoTelescope"
 }

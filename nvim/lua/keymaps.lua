@@ -56,3 +56,7 @@ vim.api.nvim_set_keymap("n", "<M-m>", ":Markview<CR>", { noremap = true, silent 
 -- window width adjustment
 vim.api.nvim_set_keymap("n", "<leader>w+", ":vertical resize +5<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>w-", ":vertical resize -5<CR>", { noremap = true, silent = true })
+
+-- annotations
+vim.api.nvim_set_keymap("n", "<Leader>nc", ":lua require('neogen').generate({ type = 'class' })<CR>",
+  { noremap = true, silent = true })

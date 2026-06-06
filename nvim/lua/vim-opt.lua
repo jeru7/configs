@@ -14,3 +14,4 @@ vim.opt.list = false
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.opt.foldlevel = 99
+vim.opt.completeopt = "menu,menuone,noinsert"

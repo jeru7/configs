@@ -12,31 +12,9 @@ return {
     lazy = false,
     dependencies = { "williamboman/mason.nvim" },
     opts = {
-      ensure_installed = { "html", "tailwindcss", "emmet_ls", "pyright" },
-      ensure_not_installed = { "ts_ls" },
+      ensure_installed = { "html", "tailwindcss", "emmet_ls" },
       automatic_installation = true,
     },
-  },
-
-  {
-    "pmizio/typescript-tools.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    config = function()
-      local capabilities = require("blink.cmp").get_lsp_capabilities()
-
-      require("typescript-tools").setup({
-        capabilities = capabilities,
-        filetypes = {
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
-        on_attach = function(client)
-          client.server_capabilities.documentFormattingProvider = false
-        end,
-      })
-    end,
   },
 
   {
@@ -92,9 +70,26 @@ return {
         "tailwindcss",
         "emmet_ls",
         "pyright",
-        "lua_ls"
+        "lua_ls",
       })
     end,
+  },
+
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {
+      settings = {
+        expose_as_code_action = "all",
+        tsserver_file_preferences = {
+          includeInlayParameterNameHints = "all",
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+        },
+      },
+    },
   },
 
   {

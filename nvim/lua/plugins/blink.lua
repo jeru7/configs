@@ -7,7 +7,9 @@ return {
   },
   opts = {
     completion = {
-      completeopt = "menu,menuone,noinsert",
+      accept = {
+        resolve_timeout_ms = 1000,
+      }
     },
     sources = {
       default = { "lsp", "path", "snippets", "buffer" },
