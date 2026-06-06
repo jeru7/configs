@@ -2,7 +2,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "*",
-    dependencies = { "nvim-tree/nvim-web-devicons", "shaunsingh/nord.nvim" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = function()
       require("bufferline").setup({
         options = {
@@ -16,7 +16,7 @@ return {
           },
           separator_style = "thin",
           modified_icon = "● ",
-          indicator = { style = "underline" },
+          indicator = { style = "none" },
           show_close_icon = false,
           show_buffer_close_icons = false,
           diagnostics = "nvim_lsp",
@@ -26,7 +26,6 @@ return {
           truncate_names = true,
           tab_size = 18,
         },
-        highlights = highlights,
       })
     end,
   },

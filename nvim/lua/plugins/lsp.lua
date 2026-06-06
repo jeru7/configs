@@ -26,7 +26,7 @@ return {
     "pmizio/typescript-tools.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       require("typescript-tools").setup({
         capabilities = capabilities,
@@ -47,7 +47,7 @@ return {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
-      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       vim.diagnostic.config({
         virtual_text = false,
@@ -101,48 +101,13 @@ return {
         callback = function(args)
           vim.lsp.buf.format({
             bufnr = args.buf,
-            async = true,
+            async = false,
             timeout_ms = 3000,
             filter = function(client)
               return client.supports_method("textDocument/formatting")
             end,
           })
         end,
-      })
-    end,
-  },
-
-  {
-    "hrsh7th/nvim-cmp",
-    lazy = false,
-    dependencies = {
-      "hrsh7th/cmp-nvim-lsp",
-      "L3MON4D3/LuaSnip",
-      "saadparwaiz1/cmp_luasnip",
-      "rafamadriz/friendly-snippets",
-    },
-    config = function()
-      local cmp = require("cmp")
-      local luasnip = require("luasnip")
-
-      require("luasnip.loaders.from_vscode").lazy_load()
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            luasnip.lsp_expand(args.body)
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
-          ["<C-Space>"] = cmp.mapping.complete(),
-          ["<A-j>"] = cmp.mapping.select_next_item(),
-          ["<A-k>"] = cmp.mapping.select_prev_item(),
-        }),
-        sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-        }),
       })
     end,
   },
