@@ -7,6 +7,7 @@ return {
     -- Enable features you want
     highlight = { enable = true },
     indent = { enable = true },
+    fold = { enable = true },
     -- Add other modules like textobjects, context, etc. if needed
     -- textobjects = { enable = true },
     -- context = { enable = true },

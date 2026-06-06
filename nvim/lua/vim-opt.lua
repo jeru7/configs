@@ -11,3 +11,6 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.termguicolors = true
 vim.opt.list = false
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 99
