@@ -31,11 +31,7 @@ return {
       ft = { "markdown", "Avante", "copilot-chat", "opencode_output" },
     },
     {
-      "saghen/blink.cmp",
-      version = "v1.*",
-      dependencies = {
-        "saghen/blink.lib",
-      },
+      "hrsh7th/nvim-cmp",
     },
     "folke/snacks.nvim",
   },

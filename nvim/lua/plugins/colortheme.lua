@@ -16,9 +16,9 @@ return {
       treesitter = true,
       indent_blankline = { enabled = true },
       which_key = true,
-      blink_cmp = true,
+      cmp = true,
       bufferline = true,
-      notify = true
+      notify = true,
     },
   },
   config = function(_, opts)
