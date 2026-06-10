@@ -24,7 +24,7 @@ include current-theme.conf
 #: <https://sw.kovidgoyal.net/kitty/kittens/choose-fonts/#font-spec-
 #: syntax>.
 
-font_size 12.0
+font_size 14.0
 
 #: Font size (in pts).
 
@@ -74,7 +74,7 @@ font_size 12.0
 
 #:     narrow_symbols codepoints [optionally the number of cells]
 
-# disable_ligatures never
+disable_ligatures always 
 
 #: Choose how you want to handle multi-character ligatures. The
 #: default is to always render them. You can tell kitty to not render
@@ -1454,7 +1454,7 @@ hide_window_decorations yes
 
 #: The foreground and background colors.
 
-# background_opacity 1.0
+# background_opacity 0.8
 
 #: The opacity of the background. A number between zero and one, where
 #: one is opaque and zero is fully transparent. This will only work if
@@ -2930,7 +2930,7 @@ hide_window_decorations yes
 
 
 # BEGIN_KITTY_FONTS
-font_family      family="SauceCodePro Nerd Font Mono"
+font_family      family='JetBrains Mono' postscript_name=JetBrainsMono-Regular
 bold_font        auto
 italic_font      auto
 bold_italic_font auto
